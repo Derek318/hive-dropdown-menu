@@ -1,6 +1,8 @@
 # To Run
 
 
-### `npm i && npm run build && npm start`
+```
+npm i && npm run build && npm start
+```
 
-localhost:3000
+Run in your browser on `localhost:3000`
