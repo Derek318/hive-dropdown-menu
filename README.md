@@ -1,8 +1,9 @@
 # To Run
 
+### Clone this repo and run the following:
 
 ```
 npm i && npm run build && npm start
 ```
 
-Run in your browser on `localhost:3000`
+Finally navigate to `localhost:3000` in your browser.
