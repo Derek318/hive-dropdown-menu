@@ -43,7 +43,8 @@ To use the Dropdown Menu component in your project, follow these steps:
     );
 
    ```
-   ![Dropdown Menu](https://storage.googleapis.com/www.derekmccreight.me/assets/hidden/dropdown_ex.gif)
+     ![Dropdown Menu](https://storage.googleapis.com/www.derekmccreight.me/assets/hidden/dropdown_ex.gif)
+
 
 
 ### API Reference
