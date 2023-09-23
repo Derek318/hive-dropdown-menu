@@ -6,30 +6,40 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* Custom Dropdown Components */}
-        <h2>Select One Fruit 🍉</h2>
+        {/* !! Custom Dropdown Components !! */}
+
+        {/* Selecting one fruit */}
+        <h5>Select One Fruit 🍉</h5>
         <Dropdown options={fruitOptions} placeholder="Select One Fruit" />
-        <h2>Select Many Vegetables 🥦</h2>
+
+        {/* Selecting many vegetables */}
+        <h5>Select Many Vegetables 🥦</h5>
         <Dropdown
           options={vegetableOptions}
           multiple
           placeholder="Select Multiple"
         />
-        <h2> Select Many Fruits & Vegetables 🍉 🥦</h2>
+
+        {/* Selecting many fruits and vegetables */}
+        <h5> Select Many Fruits & Vegetables 🍉 🥦</h5>
         <Dropdown
           options={fruitOptions.concat(vegetableOptions)}
           multiple
           placeholder="Select Multiple"
         />
-        <h2>Select One Username from 5,000</h2>
+
+        {/* Selecting one username from 5,000 */}
+        <h5>Select One Username from 5,000</h5>
         <Dropdown options={usernames} placeholder="Select One" searchable />
 
-        <h2>Select Many Usernames from 5,000</h2>
+        {/* Selecting many usernames from 5,000 */}
+        <h5>Select Many Usernames from 5,000</h5>
         <Dropdown
           options={usernames}
           placeholder="Select Multiple"
           multiple
           searchable
+          onChange={(selection) => console.log("Selected Items: ", selection)}
         />
       </header>
     </div>

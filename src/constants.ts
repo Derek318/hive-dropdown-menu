@@ -1,5 +1,7 @@
 import { toLower } from "lodash";
 
+// Some example sets to use with the Dropdown Menu
+
 export const fruitOptions = [
   "Strawberry 🍓",
   "Banana 🍌",

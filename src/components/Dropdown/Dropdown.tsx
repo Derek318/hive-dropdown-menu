@@ -15,7 +15,7 @@ interface DropdownProps {
 /**
  * Dropdown Component
  *
- * @param {object} props - Props for the Dropdown component.
+ * @param {DropdownProps} props - Props for the Dropdown component.
  * @param {function} props.onChange - Callback function invoked when selection changes.
  * @param {Array} props.options - List of options to display in the dropdown.
  * @param {boolean} props.multiple - Whether multiple options can be selected.
@@ -30,6 +30,7 @@ function Dropdown({
   searchable,
   placeholder,
 }: DropdownProps): JSX.Element {
+  // State for managing the dropdown's behavior
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [availableWidth, setAvailableWidth] = useState<number | null>(null);
@@ -39,7 +40,7 @@ function Dropdown({
   const [visibleOptions, setVisibleOptions] = useState<Option[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const batchSize = 100;
+  const batchSize = 100; // Number of options to load at once
 
   // LayoutEffect to calculate width pre-render
   useLayoutEffect(() => {
@@ -53,6 +54,7 @@ function Dropdown({
     onChange?.(selected);
   }, [onChange, selected]);
 
+  // Event listener to close the dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -66,6 +68,7 @@ function Dropdown({
     };
   }, []);
 
+  // Function to handle checkbox changes
   const handleCheckboxChange = (option: string) => {
     setSelected((prevSelected) => {
       if (prevSelected.includes(option)) {
@@ -76,6 +79,7 @@ function Dropdown({
     });
   };
 
+  // Function to toggle the dropdown's open/close state
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
 
@@ -85,6 +89,7 @@ function Dropdown({
     }
   };
 
+  // Function to load additional options
   const loadOptions = () => {
     const endIndex = Math.min(startIndex + batchSize, options.length);
     const newOptions = options.slice(startIndex, endIndex);
@@ -92,6 +97,7 @@ function Dropdown({
     setStartIndex(endIndex);
   };
 
+  // Function to render the selected items
   const renderSelectedItems = () => {
     let totalWidth = 0;
     let itemCount = 0;
@@ -142,11 +148,13 @@ function Dropdown({
     return renderedItems;
   };
 
+  // Function to clear the selection
   const clearSelection = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     e.stopPropagation();
     setSelected([]);
   };
 
+  // Function to handle removing a selected item
   const handleRemoveSelected = (
     itemToRemove: string,
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>
@@ -157,6 +165,7 @@ function Dropdown({
     );
   };
 
+  // Function to calculate the width of an item
   const getItemWidth = (item: string) => {
     const fontSize = 14;
     const paddingX = 16;
@@ -168,17 +177,19 @@ function Dropdown({
     return totalWidth;
   };
 
+  // Function to render the "Load More" option for lazy-loading of large input sets
   const renderLoadMoreOption = () => {
     if (startIndex < options.length) {
       return (
         <div className="load-more-option" onClick={loadOptions}>
-          Load More
+          See More
         </div>
       );
     }
     return null;
   };
 
+  // Filter options based on search query
   const displayOptions =
     searchQuery.length > 0
       ? options.filter((option) =>
@@ -186,28 +197,11 @@ function Dropdown({
         )
       : visibleOptions;
 
-  const debounce = <T extends (...args: any[]) => void>(
-    func: T,
-    delay: number | undefined
-  ) => {
-    let timeoutId: NodeJS.Timeout | undefined;
-
-    return (...args: Parameters<T>) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        func(...args);
-      }, delay);
-    };
-  };
-
-  const debouncedSetSearchQuery = debounce(
-    (value: React.SetStateAction<string>) => {
-      setSearchQuery(value);
-    },
-    50
-  );
-
+  // Function to render the visible options
   const renderVisibleOptions = () => {
+    const noResultsFound =
+      displayOptions.length === 0 && searchQuery.length > 0;
+
     return (
       <>
         {searchable && (
@@ -215,19 +209,22 @@ function Dropdown({
             <input
               type="text"
               className="search-input"
+              id="search-input"
+              name="search-input"
               placeholder="Search"
               value={searchQuery}
-              onChange={(e) => debouncedSetSearchQuery(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)}
               onClick={(e) => e.stopPropagation()}
             />
           </div>
         )}
 
-        {displayOptions
-          .filter((option) =>
-            option.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-          .map((option, index) => {
+        <div className="scrollable-options">
+          {noResultsFound && (
+            <div className="no-results-found">No results found</div>
+          )}
+
+          {displayOptions.map((option, index) => {
             const isOptionSelected = selected.includes(option);
             const isOptionDisabled =
               !multiple && !isOptionSelected && selected.length > 0;
@@ -242,6 +239,7 @@ function Dropdown({
                 <input
                   type="checkbox"
                   className="custom-checkbox"
+                  name="search-checkbox"
                   checked={isOptionSelected}
                   onChange={() => handleCheckboxChange(option)}
                   disabled={isOptionDisabled}
@@ -250,17 +248,21 @@ function Dropdown({
               </label>
             );
           })}
+        </div>
+
         {searchQuery.length === 0 && renderLoadMoreOption()}
       </>
     );
   };
 
+  // Render the dropdown content
   const dropdownContent = isOpen ? (
     <div className={`dropdown-content ${isOpen ? "open" : ""}`}>
       {renderVisibleOptions()}
     </div>
   ) : null;
 
+  // Render the Dropdown component
   return (
     <div className="dropdown" ref={dropdownRef}>
       <div

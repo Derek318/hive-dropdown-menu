@@ -2,6 +2,7 @@
 
 /* Style for the button */
 .dropdown-area {
+  /* Main container for the dropdown button */
   position: relative;
   display: flex;
   background-color: #fff;
@@ -22,27 +23,30 @@
   border-color: #3498db;
 }
 
-/* Add a class to highlight the button when the dropdown is open */
 .dropdown-area.active {
   border-color: #3498db;
 }
 
 .search-input-container {
-  padding: 8px 16px; /* Adjust padding as needed */
+  /* Container for the search input */
+  padding: 8px 16px;
   display: flex;
-  align-items: center; /* Vertically align content in the container */
+  align-items: center;
 }
 
 .search-input {
-  font-family: inherit; /* Use the same font as the rest of the content */
-  font-size: 14px; /* Adjust font size as needed */
-  padding: 8px; /* Adjust padding as needed */
-  border: none; /* Remove border */
-  outline: none; /* Remove outline */
-  flex: 1; /* Allow the input to grow and take up available space */
+  /* Search input field */
+  font-family: inherit;
+  font-size: 14px;
+  padding: 8px;
+  border: 1px solid rgba(211, 211, 211, 0.5);
+  border-radius: 4px;
+  outline: none;
+  flex: 1;
 }
 
 .dropdown-arrow {
+  /* Dropdown arrow */
   position: absolute;
   right: 10px;
   top: 12%;
@@ -55,6 +59,7 @@
 
 /* Style for the dropdown content */
 .dropdown-content {
+  /* Main container for the dropdown content */
   position: absolute;
   background-color: #f9f9f9;
   border-radius: 8px;
@@ -65,15 +70,22 @@
   transform: translateY(-10px);
   transition: opacity 0.2s ease, transform 0.2s ease;
   user-select: none;
-  max-height: 240px; /* Set max height */
-  overflow-y: auto; /* Add vertical scrollbar when needed */
+  max-height: 240px;
+  overflow-y: auto;
 }
 
 .load-more-option {
+  /* "Load More" option style */
   padding: 12px 16px;
   font: 14px/1.4 "RobotoDraft", sans-serif;
-  color: #333; /* Adjust the color to make it more visible */
+  color: #535353;
   cursor: pointer;
+}
+
+.no-results-found {
+  padding: 12px 16px;
+  font: 14px/1.4 "RobotoDraft", sans-serif;
+  color: #535353;
 }
 
 /* Define the hover effect for the "Load More" option */
@@ -84,6 +96,7 @@
 }
 
 .dropdown-content label.dropdown-item.disabled {
+  /* Style for disabled dropdown items */
   color: gray;
   background-color: #f0f0f0;
   cursor: not-allowed;
@@ -106,6 +119,7 @@
 
 /* Style the individual dropdown items and custom checkboxes */
 .dropdown-content .dropdown-item {
+  /* Style for individual dropdown items */
   padding: 12px 16px;
   font: 14px/1.4 "RobotoDraft", sans-serif;
   color: #333;
@@ -141,16 +155,19 @@
 }
 
 .custom-checkbox input {
+  /* Hide the native checkbox input */
   position: absolute;
   opacity: 0;
 }
 
 .selected-items {
+  /* Container for selected items */
   display: flex;
   flex-wrap: wrap; /* Allow items to wrap */
 }
 
 .selected-item {
+  /* Style for selected items */
   display: inline-block;
   padding: 4px 8px;
   margin-right: 8px;
@@ -162,6 +179,7 @@
 }
 
 .remove-item {
+  /* Style for the remove item button */
   width: 8px;
   height: 8px;
   margin-left: 4px;
@@ -170,6 +188,7 @@
 }
 
 .remove-item:hover {
+  /* Change remove item button color on hover */
   cursor: pointer;
   color: black;
 }
